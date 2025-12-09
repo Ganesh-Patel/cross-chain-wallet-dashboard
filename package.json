@@ -2,6 +2,7 @@
   "name": "orbitxpay-wallet-dashboard",
   "version": "1.0.0",
   "type": "module",
+  "author": "Ganesh Patel",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

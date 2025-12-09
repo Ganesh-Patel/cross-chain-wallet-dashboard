@@ -96,18 +96,42 @@ export const TransactionList: React.FC<TransactionListProps> = ({ transactions }
     );
   }
 
+  // Check if transactions are demo data (by checking if hash starts with known demo prefixes)
+  const isDemoData = transactions.length > 0 && (
+    transactions[0].hash.startsWith('0x1234567890') ||
+    transactions[0].hash.startsWith('0xpolygon') ||
+    transactions[0].hash.startsWith('0xarbitrum')
+  );
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Recent Transactions
-        </h3>
+        <div className="flex items-center space-x-3">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Recent Transactions
+          </h3>
+          {isDemoData && (
+            <span className="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-xs font-semibold rounded-full border border-yellow-300 dark:border-yellow-700">
+              DEMO DATA
+            </span>
+          )}
+        </div>
         <div className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
           <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
             {transactions.length} {transactions.length === 1 ? 'Transaction' : 'Transactions'}
           </span>
         </div>
       </div>
+      {isDemoData && (
+        <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <p className="text-sm text-blue-700 dark:text-blue-300 flex items-center space-x-2">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Showing demo transactions. Your actual transactions will appear here once you have activity on this network.</span>
+          </p>
+        </div>
+      )}
       <div className="space-y-3">
         {transactions.map((tx, index) => (
           <div
